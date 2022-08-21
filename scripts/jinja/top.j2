@@ -1,0 +1,116 @@
+<!-- HTML CSS WILL BE REPLACED BY GMAIL  -->
+<!-- use an Inline Conversion tool       -->
+<!-- https://templates.mailchimp.com/resources/inline-css/ -->
+
+<html>
+<style type="text/css">
+
+
+
+body {font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif; font-size: 16px; background: white;}
+
+hr { border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); }
+
+table {
+    color: #333; /* Lighten up font color */
+    font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+    width: 900px;
+    border-collapse:
+    collapse; border-spacing: 0;
+}
+
+td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
+
+th {
+    background: #F3F3F3; /* Light grey background */
+    font-weight: bold; /* Make sure they're bold */
+    padding: 5px;
+}
+
+td {
+    background: #FAFAFA; /* Lighter grey background */
+    text-align: center; /* Center our text */
+    padding: 5px;
+}
+
+.info {
+    font-size: 12px
+}
+.maintable {
+    color:#333;font-family:Helvetica,Arial,sans-serif;font-size:12px;border-collapse:collapse;border-spacing: 0;
+}
+</style>
+
+
+<div class="body">
+    <h1>Top {{ title.upper() }} Snapshot for {{ hostname }}</h1>
+    <br>
+    Date: {{ date }}
+    <p>
+{% if title == "cpu" %}
+<hr>
+<br>
+
+<div class="info">
+    <b># of CPUs:</b> {{ result["num_cpus"] }}<br>
+    <b>Load Avg (1/5/15 min):</b> {{ result["load_avg"] }}<br>
+    <b>I/O Wait:</b> {{ result["iowait"] }}<br>
+    <b>IRQ (proc interrupts):</b> {{ result["irq"] }}<br>
+    <b>% of all CPUs used:</b> {{ result["cpu"] }}
+</div>
+
+<table class="maintable">
+<tr>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding: 5px;">CPU %</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding: 5px;">PID</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding: 5px;">STATE</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding: 5px;">USER</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding: 5px;">TIME</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding: 5px;">CMD</th>
+</tr>
+{% for p in result["procs"] %}
+<tr>
+    <td style="border:1px solid #CCC;">{{ result["procs"][p]["cpu_pct"]}}</td>
+    <td style="border:1px solid #CCC;">{{ p }}</td>
+    <td style="border:1px solid #CCC;">{{ result["procs"][p]["state"] }}</td>
+    <td style="border:1px solid #CCC;">{{ result["procs"][p]["user"] }}</td>
+    <td style="border:1px solid #CCC;">{{ result["procs"][p]["time"] }}</td>
+    <td style="border:1px solid #CCC;text-align:left;padding:5px;">{{ result["procs"][p]["cmd"] }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+{% if title == "mem" %}
+<div style="font-size:12px">
+    <b>Mem Total:</b> {{ result["mem_total"] }}<br>
+    <b>Mem Available:</b> {{ result["mem_avail"] }}<br>
+    <b>Mem Used:</b> {{ result["mem_used"] }}<br>
+    <b>Mem Free:</b> {{ result["mem_free"] }}<br>
+    <b>Swap Total:</b> {{ result["swap_total"] }}<br>
+    <b>Swap Free:</b> {{ result["swap_free"] }}<br>
+    <b>Swap %:</b> {{ result["swap_pct"] }}<br>
+</div>
+<hr>
+<br>
+<table class="maintable">
+<tr>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding:5px;">MEM %</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding:5px;">PID</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding:5px;">USER</th>
+    <th style="border:1px solid #CCC;height:30px;background:#F3F3F3;font-weight:bold;padding:5px;">CMD</th>
+</tr>
+{% for p in result['procs'] %}
+<tr>
+    <td style="border:1px solid #CCC;">{{p["mem_pct"]}}</td>
+    <td style="border:1px solid #CCC;">{{p["pid"]}}</td>
+    <td style="border:1px solid #CCC;">{{p["user"]}}</td>
+    <td style="border:1px solid #CCC;text-align:left;padding:5px;">{{ p["args"] }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+</p><p>
+<hr>
+</div>
+</html>

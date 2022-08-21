@@ -1,0 +1,54 @@
+<html>
+<style type="text/css">
+body {font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif; font-size: 16px; background: white;}
+
+hr { border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); }
+
+table {
+    color: #333; /* Lighten up font color */
+    font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+    width: 700px;
+    border-collapse:
+    collapse; border-spacing: 0;
+}
+
+td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
+
+th {
+    background: #F3F3F3; /* Light grey background */
+    font-weight: bold; /* Make sure they're bold */
+    padding: 5px;
+}
+
+td {
+    background: #FAFAFA; /* Lighter grey background */
+    text-align: center; /* Center our text */
+    padding: 5px;
+}
+</style>
+
+
+<div class="body">
+<h1>{{ hostname }}: Largest files in {{ path }}</h1>
+<br>
+Date: {{ date }}
+<p>
+<hr style="border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+<table style="color: #333;font-family: Helvetica, Arial, sans-serif;width: 700px;border-collapse: collapse;border-spacing: 0;">
+{% for line in result %}
+{% set ln = line.split() %}
+<tr>
+    <td style="text-align: left;border: 1px solid #CCC;height: 30px;background: #FAFAFA;padding: 5px;">
+        {{ ln[0] }}
+    </td>
+    <td style="text-align: left;border: 1px solid #CCC;height: 30px;background: #FAFAFA;padding: 5px;">
+        {{ ln[1] }}
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<br>
+
+</p></div>
+</html>
